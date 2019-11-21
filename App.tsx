@@ -1,19 +1,23 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './src/redux/store';
+import { View } from 'native-base';
+import RootComponent from './src/RootComponent';
+import { ActivityIndicator } from 'react-native';
+
+class App extends Component {
+	render(): React.ReactElement {
+		const renderLoading: React.ReactNode = <View><ActivityIndicator size="large" /></View>;
+		return (
+			<Provider store={store}>
+				<PersistGate loading={renderLoading} persistor={persistor}>
+					<RootComponent />
+				</PersistGate>
+			</Provider >
+		);
+	}
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
