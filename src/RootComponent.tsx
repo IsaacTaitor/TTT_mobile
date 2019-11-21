@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Root } from 'native-base';
-import AppNavigator from './Srceen/Navigation';
-import * as Font from 'expo-font';
+import React, { Component } from "react";
+import { Root } from "native-base";
+import AppNavigator from "./srceen/Navigation";
+import * as Font from "expo-font";
 
 interface RootComponentState {
 	isLoaded: boolean;
@@ -11,11 +11,11 @@ class RootComponent extends Component<{}, RootComponentState> {
 
 	state: RootComponentState = { isLoaded: false };
 
-	async UNSAFE_componentWillMount() {
-		(console as any).disableYellowBox = true;
+	async UNSAFE_componentWillMount(): Promise<any> {
+		console.disableYellowBox = true;
 		await Font.loadAsync({
-			Roboto: require('../node_modules/native-base/Fonts/Roboto.ttf'),
-			Roboto_medium: require('../node_modules/native-base/Fonts/Roboto_medium.ttf')
+			"Roboto": require("../node_modules/native-base/Fonts/Roboto.ttf"),
+			"Roboto_medium": require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
 		});
 		this.setState({ isLoaded: true });
 	}

@@ -1,9 +1,10 @@
-import { createAppContainer } from 'react-navigation';
-import { HomeScreen } from './HomeScreen';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 
-const stackNavigationConfig: { [key: string]: any } = {
-	headerMode: 'none'
+import HomeScreen from "./HomeScreen";
+
+const stackNavigationConfig: { [key: string]: string } = {
+	headerMode: "none"
 };
 
 const MainNavigator = createStackNavigator({

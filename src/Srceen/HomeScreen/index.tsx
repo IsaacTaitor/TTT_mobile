@@ -1,34 +1,52 @@
-import React, { Component } from 'react';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text } from 'native-base';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
+import { Container, Content, Icon, Fab, Input } from "native-base";
+import { ApplicationStore } from "../../types/store";
+import Headers from "../../components/Headers";
+import { styles } from "./styles";
+import { renamePlayer } from "../../redux/player/playerActions";
 
-export class HomeScreen extends Component {
-	render() {
+interface HomeScreenProps {
+	playerName: string;
+	renamePlayer(newName: string): void;
+}
+
+const mapStateToProps = (state: ApplicationStore): any => ({
+	playerName: state.playerStore.playerName
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<any>) => {
+	return {
+		renamePlayer: bindActionCreators(renamePlayer, dispatch)
+	};
+};
+
+
+class HomeScreen extends Component<HomeScreenProps> {
+
+	onEndEditing = (e) => {
+		this.props.renamePlayer(e.nativeEvent.text);
+	}
+
+	render(): React.ReactElement {
 		return (
-			<Container>
-				<Header>
-					<Left>
-						<Button transparent>
-							<Icon name='menu' />
-						</Button>
-					</Left>
-					<Body>
-						<Title>Header</Title>
-					</Body>
-					<Right />
-				</Header>
-				<Content>
-					<Text>
-						This is Content Section
-					</Text>
+			<Container style={styles.container}>
+				<Headers />
+				<Content style={styles.content}>
+					<Input
+						style={styles.inputName}
+						defaultValue={this.props.playerName}
+						onEndEditing={this.onEndEditing} />
 				</Content>
-				<Footer>
-					<FooterTab>
-						<Button full>
-							<Text>Footer</Text>
-						</Button>
-					</FooterTab>
-				</Footer>
+				<Fab
+					style={styles.buttonNewGame}
+					position="bottomRight">
+					<Icon name="add" />
+				</Fab>
 			</Container>
 		);
 	}
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
