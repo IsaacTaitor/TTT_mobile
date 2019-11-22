@@ -6,6 +6,7 @@ import reduxThunk from "redux-thunk";
 import promise from "redux-promise";
 
 import { playerReducer } from "./player/playerReducers";
+import { gamesReducer } from "./games/gamesReducers";
 
 const persistConfig = {
 	key: "root",
@@ -13,7 +14,8 @@ const persistConfig = {
 };
 
 const persistedReducer = persistCombineReducers(persistConfig, {
-	playerStore: playerReducer
+	playerStore: playerReducer,
+	gamesStore: gamesReducer
 });
 
 const logger = createLogger();

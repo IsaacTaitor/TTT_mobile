@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Root } from "native-base";
-import AppNavigator from "./srceen/Navigation";
+import AppNavigator from "./screen/Navigation";
 import * as Font from "expo-font";
 
 interface RootComponentState {
@@ -11,7 +11,7 @@ class RootComponent extends Component<{}, RootComponentState> {
 
 	state: RootComponentState = { isLoaded: false };
 
-	async UNSAFE_componentWillMount(): Promise<any> {
+	async componentDidMount(): Promise<any> {
 		console.disableYellowBox = true;
 		await Font.loadAsync({
 			"Roboto": require("../node_modules/native-base/Fonts/Roboto.ttf"),

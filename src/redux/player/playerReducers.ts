@@ -3,11 +3,11 @@ import { AnyAction } from "redux";
 import { RENAME_PLAYER } from "../../types/actions";
 import { PlayerName } from "../../types/store";
 
-const authStoreInitialState: PlayerName = {
+const initialState: PlayerName = {
 	playerName: "Chuck Norris"
 };
 
-export function playerReducer(state = authStoreInitialState, action: AnyAction): PlayerName {
+export function playerReducer(state = initialState, action: AnyAction): PlayerName {
 	switch (action.type) {
 	case RENAME_PLAYER:
 		return {
