@@ -6,7 +6,7 @@ const Headers: React.FC = () => {
 	return (
 		<Header style={styles.headerColor}>
 			<Body>
-				<Title>Tic Tac Toe</Title>
+				<Title style={styles.headerTitle}>Tic Tac Toe</Title>
 			</Body>
 		</Header>
 	);

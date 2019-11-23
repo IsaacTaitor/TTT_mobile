@@ -1,16 +1,29 @@
 import React from "react";
 import { Text, View } from "native-base";
+import { styles } from "./styles";
+import { TouchableNativeFeedback } from "react-native";
 
 interface GamesSquareProps {
 	opponent: string;
-	last?: boolean;
+	isLast?: boolean;
+	onPress(): void;
 }
 
 const GamesSquare: React.FC<GamesSquareProps> = (props: GamesSquareProps) => {
+	const onPress = (): void => {
+		props.onPress();
+	};
+
 	return (
-		<View style={{ width: "23%", height: 74, backgroundColor: "grey", marginBottom: 5, marginRight: "2%" }}>
-			<Text>{props.opponent}</Text>
-		</View >
+		<TouchableNativeFeedback
+			onPress={onPress}>
+			<View
+				style={[styles.body, props.isLast ? null : { marginRight: "2%" }]}
+			>
+				<Text style={styles.title}>{props.opponent}</Text>
+			</View >
+		</TouchableNativeFeedback>
+
 	);
 };
 

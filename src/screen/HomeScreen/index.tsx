@@ -32,14 +32,19 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): any => {
 
 class HomeScreen extends Component<HomeScreenProps> {
 
-	onEndEditing = (e) => {
+	onEndEditing = (e: any): void => {
 		this.props.renamePlayer(e.nativeEvent.text);
 	}
 
-	createNewGame = () => {
+	navigateToGame = (id: string): void => {
+		console.log(id)
+		this.props.navigation.navigate("Game", { id });
+	}
+
+	createNewGame = (): void => {
 		const id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
 		this.props.createNewGame(id);
-		this.props.navigation.navigate("Game", { id });
+		this.navigateToGame(id);
 	}
 
 	render(): React.ReactElement {
@@ -51,10 +56,14 @@ class HomeScreen extends Component<HomeScreenProps> {
 						style={styles.inputName}
 						defaultValue={this.props.playerName}
 						onEndEditing={this.onEndEditing} />
-					<View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap" }}>
+					<View style={styles.games}>
 						{
 							Object.keys(this.props.games).map((id, key) =>
-								<GameSquare key={id} opponent={this.props.games[id].opponent}/>
+								<GameSquare
+									onPress={(): void => this.navigateToGame(id)}
+									key={id}
+									opponent={this.props.games[id].opponent}
+									isLast={!((key + 1) % 4)} />
 							)
 						}
 					</View>

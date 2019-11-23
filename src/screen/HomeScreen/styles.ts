@@ -6,15 +6,22 @@ export const styles = StyleSheet.create({
 		flex: 1
 	},
 	content: {
-		marginLeft: 24,
-		marginRight: 24
+		paddingLeft: 24,
+		paddingRight: 24
 	},
 	inputName: {
 		borderBottomWidth: 1,
 		borderBottomColor: "#dbdbdb",
-		width: "70%"
+		width: "70%",
+		height: 45,
+		marginBottom: 10
 	},
 	buttonNewGame: {
 		backgroundColor: "#009789"
+	},
+	games: {
+		flex: 1,
+		flexDirection: "row",
+		flexWrap: "wrap"
 	}
 });
