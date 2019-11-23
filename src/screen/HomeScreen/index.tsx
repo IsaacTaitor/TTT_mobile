@@ -37,14 +37,25 @@ class HomeScreen extends Component<HomeScreenProps> {
 	}
 
 	navigateToGame = (id: string): void => {
-		console.log(id)
-		this.props.navigation.navigate("Game", { id });
+		this.props.navigation.navigate("Game", { game: this.props.games[id], playerName: this.props.playerName });
 	}
 
 	createNewGame = (): void => {
 		const id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
 		this.props.createNewGame(id);
 		this.navigateToGame(id);
+	}
+
+	private viewGames = (): React.ReactElement => {
+		return <View style={styles.games}>
+			{Object.keys(this.props.games).map((id, key) =>
+				<GameSquare
+					onPress={(): void => this.navigateToGame(id)}
+					key={id}
+					opponent={this.props.games[id].opponent}
+					isLast={!((key + 1) % 4)} />
+			)}
+		</View>;
 	}
 
 	render(): React.ReactElement {
@@ -56,17 +67,7 @@ class HomeScreen extends Component<HomeScreenProps> {
 						style={styles.inputName}
 						defaultValue={this.props.playerName}
 						onEndEditing={this.onEndEditing} />
-					<View style={styles.games}>
-						{
-							Object.keys(this.props.games).map((id, key) =>
-								<GameSquare
-									onPress={(): void => this.navigateToGame(id)}
-									key={id}
-									opponent={this.props.games[id].opponent}
-									isLast={!((key + 1) % 4)} />
-							)
-						}
-					</View>
+					{this.viewGames()}
 				</Content>
 				<Fab
 					style={styles.buttonNewGame}

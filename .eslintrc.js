@@ -43,6 +43,7 @@ module.exports = {
             "error",
             "always"
         ],
+        "no-debugger": "off",
         /*"linebreak-style": ["error", "unix"]*/
         /*"linebreak-style": ["error", "windows"],*/
         "linebreak-style": 0,
