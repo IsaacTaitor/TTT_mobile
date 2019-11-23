@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { bindActionCreators, Dispatch, AnyAction } from "redux";
 import { Container, Content, Icon, Fab, Input, Text, View } from "native-base";
 import { ApplicationStore, Games } from "../../types/store";
-import Headers from "../../components/Headers";
-import GameSquare from "../../components/GameSquare";
+import Headers from "../../components/shared/Headers";
+import GameSquare from "../../components/shared/GameSquare";
 import { styles } from "./styles";
 import { renamePlayer } from "../../redux/player/playerActions";
 import { createNewGame } from "../../redux/games/gamesActions";
@@ -37,13 +37,17 @@ class HomeScreen extends Component<HomeScreenProps> {
 	}
 
 	navigateToGame = (id: string): void => {
-		this.props.navigation.navigate("Game", { game: this.props.games[id], playerName: this.props.playerName });
+		this.props.navigation.navigate("Game", { playerName: this.props.playerName, id });
 	}
 
 	createNewGame = (): void => {
 		const id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
 		this.props.createNewGame(id);
-		this.navigateToGame(id);
+
+		setTimeout(
+			() => {
+				this.navigateToGame(id);
+			}, 0);
 	}
 
 	private viewGames = (): React.ReactElement => {

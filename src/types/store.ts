@@ -12,9 +12,16 @@ export interface Game {
 	begin: number;
 	opponent: string;
 	status: string;
-	field: Array<Array<string>>;
+	step: string;
+	field: Array<Array<StateCell>>;
 }
 
 export interface Games {
 	[id: string]: Game;
+}
+
+export enum StateCell {
+	Empty,
+	X,
+	O,
 }

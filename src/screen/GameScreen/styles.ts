@@ -19,17 +19,6 @@ export const styles = StyleSheet.create({
 		borderBottomWidth: 3,
 		alignItems: "center"
 	},
-	cell: {
-		borderColor: "#f2ca4b",
-		width: 70,
-		height: 70
-	},
-	borderBottomWidth: {
-		borderBottomWidth: 5
-	},
-	borderRightWidth: {
-		borderRightWidth: 5
-	},
 	scoreBoard: {
 		flex: 1,
 		flexDirection: "row",

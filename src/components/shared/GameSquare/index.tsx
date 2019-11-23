@@ -23,7 +23,6 @@ const GamesSquare: React.FC<GamesSquareProps> = (props: GamesSquareProps) => {
 				<Text style={styles.title}>{props.opponent}</Text>
 			</View >
 		</TouchableNativeFeedback>
-
 	);
 };
 

@@ -1,13 +1,30 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch, AnyAction } from "redux";
 import { Container, Content, Text, Icon, View } from "native-base";
-import Headers from "../../components/Headers";
-import { Game } from "../../types/store";
+import Headers from "../../components/shared/Headers";
+import GameField from "../../components/elements/GameField";
+import { Game, Games, ApplicationStore } from "../../types/store";
 import { styles } from "./styles";
+
+import { editField } from "../../redux/games/gamesActions";
 
 interface GameScreenProps {
 	navigation: any;
 	game: Game;
+	games: Games;
+	editField(): Function;
 }
+
+const mapStateToProps = (state: ApplicationStore): any => ({
+	games: state.gamesStore
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): any => {
+	return {
+		editField: bindActionCreators(editField, dispatch)
+	};
+};
 
 class GameScreen extends Component<GameScreenProps> {
 
@@ -26,43 +43,19 @@ class GameScreen extends Component<GameScreenProps> {
 		);
 	}
 
-	private viewField = (field: Array<Array<string>>): React.ReactElement => {
-
-		const styleLastRow = (i) => {
-			if (!(i === 2)) {
-				return styles.borderBottomWidth;
-			}
-		};
-		return (
-			<View style={{ alignItems: "center" }}>
-				<View style={{ flexDirection: "column" }}>
-					{
-						field.map(
-							(row, i) =>
-								<View key={i} style={{ flexDirection: "row" }}>
-									<View style={[styles.cell, styles.borderRightWidth, styleLastRow(i)]}>{row[0]}</View>
-									<View style={[styles.cell, styles.borderRightWidth, styleLastRow(i)]}>{row[1]}</View>
-									<View style={[styles.cell, styleLastRow(i)]}>{row[2]}</View>
-								</View>
-						)
-					}
-				</View>
-			</View>
-		);
-	}
-
 	render(): React.ReactElement {
-		const { game, playerName } = this.props.navigation.state.params;
+		const { id, playerName } = this.props.navigation.state.params;
+		const { games, editField } = this.props;
 		return (
 			<Container style={styles.container}>
 				<Headers />
 				<Content style={styles.content}>
-					{this.viewScoreboard(playerName, game.opponent)}
-					{this.viewField(game.field)}
+					{this.viewScoreboard(playerName, games[id].opponent)}
+					<GameField field={games[id].field} id={id} editField={editField}/>
 				</Content>
 			</Container>
 		);
 	}
 }
 
-export default GameScreen;
+export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);
