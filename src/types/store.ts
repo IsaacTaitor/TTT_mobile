@@ -12,7 +12,7 @@ export interface Game {
 	begin: number;
 	opponent: string;
 	status: StateStatus;
-	step: string;
+	turn: StateTurn;
 	field: Array<Array<StateCell>>;
 }
 
@@ -30,4 +30,9 @@ export enum StateStatus {
 	PLAYING,
 	WIN,
 	LOSE
+}
+
+export enum StateTurn {
+	PLAYER,
+	AI
 }

@@ -10,8 +10,7 @@ import { gamesReducer } from "./games/gamesReducers";
 
 const persistConfig = {
 	key: "root",
-	storage: AsyncStorage,
-	blacklist: ["gamesStore"]
+	storage: AsyncStorage
 };
 
 const persistedReducer = persistCombineReducers(persistConfig, {

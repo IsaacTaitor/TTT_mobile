@@ -4,8 +4,9 @@ import { bindActionCreators, Dispatch, AnyAction } from "redux";
 import { Container, Content, Text, Icon, View } from "native-base";
 import Headers from "../../components/shared/Headers";
 import GameField from "../../components/elements/GameField";
-import { Game, Games, ApplicationStore, StateStatus } from "../../types/store";
+import { Game, Games, ApplicationStore, StateStatus, StateTurn, StateCell } from "../../types/store";
 import { styles } from "./styles";
+import { turnAI } from "../../utils";
 
 import { editField } from "../../redux/games/gamesActions";
 
@@ -13,7 +14,7 @@ interface GameScreenProps {
 	navigation: any;
 	game: Game;
 	games: Games;
-	editField(): Function;
+	editField(id: string, turn: StateTurn, coordinates: { x: number; y: number }): Function;
 }
 
 const mapStateToProps = (state: ApplicationStore): any => ({
@@ -27,6 +28,14 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): any => {
 };
 
 class GameScreen extends Component<GameScreenProps> {
+
+	componentDidUpdate(): void {
+		const { id } = this.props.navigation.state.params;
+		const { games, editField } = this.props;
+		if (games[id].turn === StateTurn.AI) {
+			turnAI(id, games[id].field, editField);
+		}
+	}
 
 	private viewScoreboard = (playerName: string, opponent: string): React.ReactElement => {
 		return (
