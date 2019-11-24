@@ -11,7 +11,7 @@ export interface Game {
 	id: string;
 	begin: number;
 	opponent: string;
-	status: string;
+	status: StateStatus;
 	step: string;
 	field: Array<Array<StateCell>>;
 }
@@ -24,4 +24,10 @@ export enum StateCell {
 	Empty,
 	X,
 	O,
+}
+
+export enum StateStatus {
+	PLAYING,
+	WIN,
+	LOSE
 }

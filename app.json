@@ -29,6 +29,8 @@
     "androidStatusBar": {
       "barStyle": "light-content",
       "backgroundColor": "#000000"
-    }
+    },
+    "description": "",
+    "githubUrl": "https://github.com/IsaacTaitor/TTT_mobile"
   }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Icon } from "native-base";
 import { styles } from "./styles";
 import { StateCell } from "../../../types/store";
-import { TouchableHighlight, TouchableWithoutFeedback } from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
 
 interface GameFieldProps {
 	field: Array<Array<StateCell>>;
@@ -33,15 +33,22 @@ const GameField: React.FC<GameFieldProps> = (props: GameFieldProps) => {
 				{
 					props.field.map((row: Array<StateCell>, i: number) =>
 						<View key={i} style={{ flexDirection: "row" }}>
-							<TouchableWithoutFeedback onPress={(): Function => props.editField(props.id, "player", { x: i, y: 0 })}>
-								<View style={[styles.cell, styles.borderRightWidth, styleLastRow(i)]}>{viewIcon(row[0])}</View>
-							</TouchableWithoutFeedback>
-							<TouchableWithoutFeedback onPress={(): Function => props.editField(props.id, "player", { x: i, y: 1 })}>
-								<View style={[styles.cell, styles.borderRightWidth, styleLastRow(i)]}>{viewIcon(row[1])}</View>
-							</TouchableWithoutFeedback>
-							<TouchableWithoutFeedback onPress={(): Function => props.editField(props.id, "player", { x: i, y: 2 })}>
-								<View style={[styles.cell, styleLastRow(i)]}>{viewIcon(row[2])}</View>
-							</TouchableWithoutFeedback>
+							{
+								row.map((state: StateCell, k: number) =>
+									<TouchableWithoutFeedback
+										key={i + "" + k}
+										onPress={(): void => {
+											if (row[k] === StateCell.Empty) {
+												props.editField(props.id, "player", { x: i, y: k });
+											}
+										}
+										}>
+										<View style={[styles.cell,
+											k === 2 ? null : styles.borderRightWidth,
+											styleLastRow(i)]}>{viewIcon(row[k])}</View>
+									</TouchableWithoutFeedback>
+								)
+							}
 						</View>
 					)
 				}

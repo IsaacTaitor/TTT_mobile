@@ -4,7 +4,7 @@ import { bindActionCreators, Dispatch, AnyAction } from "redux";
 import { Container, Content, Text, Icon, View } from "native-base";
 import Headers from "../../components/shared/Headers";
 import GameField from "../../components/elements/GameField";
-import { Game, Games, ApplicationStore } from "../../types/store";
+import { Game, Games, ApplicationStore, StateStatus } from "../../types/store";
 import { styles } from "./styles";
 
 import { editField } from "../../redux/games/gamesActions";
@@ -51,7 +51,12 @@ class GameScreen extends Component<GameScreenProps> {
 				<Headers />
 				<Content style={styles.content}>
 					{this.viewScoreboard(playerName, games[id].opponent)}
-					<GameField field={games[id].field} id={id} editField={editField}/>
+					<GameField field={games[id].field} id={id} editField={editField} />
+					{games[id].status === StateStatus.WIN
+						? <Text>ВЫ ПОБЕДИЛИ!</Text>
+						: games[id].status === StateStatus.LOSE
+							? <Text>ВЫ ПРОИГРАЛИ :(</Text>
+							: null}
 				</Content>
 			</Container>
 		);
