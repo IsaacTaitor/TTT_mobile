@@ -29,7 +29,8 @@ export enum StateCell {
 export enum StateStatus {
 	PLAYING,
 	WIN,
-	LOSE
+	LOSE,
+	DRAW
 }
 
 export enum StateTurn {

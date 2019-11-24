@@ -4,7 +4,7 @@ import { CREATE_NEW_GAME, EDIT_FIELD } from "../../types/actions";
 import { Game, Games, StateCell, StateStatus, StateTurn } from "../../types/store";
 
 const { Empty, X, O } = StateCell;
-const { PLAYING, WIN, LOSE } = StateStatus;
+const { PLAYING, WIN, LOSE, DRAW } = StateStatus;
 
 const initialState: Games = {
 	"f5d47a64": {
@@ -57,7 +57,14 @@ const checkStatus = (field: Game["field"]): StateStatus => {
 			return LOSE;
 		}
 	}
-	return PLAYING;
+	for (let i = 0; i < 3; i++) {
+		for (let k = 0; k < 3; k++) {
+			if (field[i][k] === StateCell.Empty) {
+				return PLAYING;
+			}
+		}
+	}
+	return DRAW;
 };
 
 export function gamesReducer(state: Games = initialState, action: AnyAction): Games {

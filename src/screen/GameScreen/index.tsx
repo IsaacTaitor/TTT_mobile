@@ -39,16 +39,37 @@ class GameScreen extends Component<GameScreenProps> {
 	private viewScoreboard = (playerName: string, game: Game): React.ReactElement => {
 		return (
 			<View style={styles.scoreBoard}>
-				<View style={[styles.player, game.turn === StateTurn.PLAYER ? {borderBottomWidth: 3} : null]}>
+				<View style={[styles.player, game.turn === StateTurn.PLAYER ? { borderBottomWidth: 3 } : null]}>
 					<Text>{playerName}</Text>
 					<Icon name={"md-close"} style={{ color: "grey", paddingLeft: 10 }} />
 				</View>
-				<View style={[styles.opponent, game.turn === StateTurn.AI ? {borderBottomWidth: 3} : null]}>
+				<View style={[styles.opponent, game.turn === StateTurn.AI ? { borderBottomWidth: 3 } : null]}>
 					<Icon name={"md-radio-button-off"} style={{ color: "#299ddc", paddingRight: 10 }} />
 					<Text>{game.opponent}</Text>
 				</View>
 			</View>
 		);
+	}
+
+	private viewStatusGame = (status: StateStatus): React.ReactElement => {
+		if (status !== StateStatus.PLAYING) {
+			let text;
+			if (status === StateStatus.WIN) {
+				text = <Text style={{ fontSize: 18, color: "green" }}>YOU WIN!</Text>;
+			} else if (status === StateStatus.LOSE) {
+				text = <Text style={{ fontSize: 18, color: "red" }}>YOU LOSE</Text>;
+			} else if (status === StateStatus.DRAW) {
+				text = <Text style={{ fontSize: 18, color: "black" }}>DRAW</Text>;
+			}
+			return (
+				<View style={{
+					justifyContent: "center",
+					alignItems: "center",
+					height: 100
+				}}>
+					{text}
+				</View>);
+		}
 	}
 
 	render(): React.ReactElement {
@@ -59,12 +80,8 @@ class GameScreen extends Component<GameScreenProps> {
 				<Headers />
 				<Content style={styles.content}>
 					{this.viewScoreboard(playerName, games[id])}
-					<GameField game={games[id]} editField={editField}/>
-					{games[id].status === StateStatus.WIN
-						? <Text>ВЫ ПОБЕДИЛИ!</Text>
-						: games[id].status === StateStatus.LOSE
-							? <Text>ВЫ ПРОИГРАЛИ :(</Text>
-							: null}
+					<GameField game={games[id]} editField={editField} />
+					{this.viewStatusGame(games[id].status)}
 				</Content>
 			</Container>
 		);
