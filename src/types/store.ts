@@ -34,5 +34,6 @@ export enum StateStatus {
 
 export enum StateTurn {
 	PLAYER,
-	AI
+	AI,
+	GAMEOVER
 }

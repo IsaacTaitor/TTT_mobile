@@ -16,7 +16,6 @@ export const styles = StyleSheet.create({
 	opponent: {
 		height: 50,
 		flexDirection: "row",
-		borderBottomWidth: 3,
 		alignItems: "center"
 	},
 	scoreBoard: {

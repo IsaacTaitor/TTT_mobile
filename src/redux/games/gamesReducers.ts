@@ -60,7 +60,7 @@ const checkStatus = (field: Game["field"]): StateStatus => {
 	return PLAYING;
 };
 
-export function gamesReducer(state = initialState, action: AnyAction): Games {
+export function gamesReducer(state: Games = initialState, action: AnyAction): Games {
 	const { type, payload } = action;
 	switch (type) {
 	case CREATE_NEW_GAME:
@@ -71,18 +71,21 @@ export function gamesReducer(state = initialState, action: AnyAction): Games {
 				begin: new Date().getTime(),
 				opponent: "AI",
 				status: StateStatus.PLAYING,
+				turn: StateTurn.PLAYER,
 				field: [[Empty, Empty, Empty], [Empty, Empty, Empty], [Empty, Empty, Empty]]
 			}
 		};
 	case EDIT_FIELD: {
 		const field = editField(state[payload.id].field, payload.turn, payload.coordinates);
+		const status = checkStatus(field);
+		const turn = status === StateStatus.PLAYING ? payload.turn === StateTurn.PLAYER ? StateTurn.AI : StateTurn.PLAYER : StateTurn.GAMEOVER;
 		return {
 			...state,
 			[payload.id]: {
 				...state[payload.id],
 				field,
-				status: checkStatus(field),
-				turn: payload.turn === StateTurn.PLAYER ? StateTurn.AI : StateTurn.PLAYER
+				status,
+				turn
 			}
 		};
 	}

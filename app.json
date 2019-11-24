@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Крестики-нолики",
+    "name": "Tic Tac Toe",
     "slug": "TTT_mobile",
     "privacy": "public",
     "sdkVersion": "35.0.0",
@@ -30,7 +30,7 @@
       "barStyle": "light-content",
       "backgroundColor": "#000000"
     },
-    "description": "",
+    "description": "Simple game on react-native",
     "githubUrl": "https://github.com/IsaacTaitor/TTT_mobile"
   }
 }
