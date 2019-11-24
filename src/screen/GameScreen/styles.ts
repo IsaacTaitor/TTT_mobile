@@ -24,5 +24,11 @@ export const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		paddingTop: 10,
 		paddingBottom: 20
+	},
+	button: {
+		backgroundColor: "#009789",
+		width: 125,
+		height: 50,
+		justifyContent: "center", alignItems: "center"
 	}
 });

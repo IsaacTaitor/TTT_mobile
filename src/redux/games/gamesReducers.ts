@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 
-import { CREATE_NEW_GAME, EDIT_FIELD } from "../../types/actions";
+import { CREATE_NEW_GAME, EDIT_FIELD, SURRENDER } from "../../types/actions";
 import { Game, Games, StateCell, StateStatus, StateTurn } from "../../types/store";
 
 const { Empty, X, O } = StateCell;
@@ -93,6 +93,16 @@ export function gamesReducer(state: Games = initialState, action: AnyAction): Ga
 				field,
 				status,
 				turn
+			}
+		};
+	}
+	case SURRENDER: {
+		return {
+			...state,
+			[payload.id]: {
+				...state[payload.id],
+				status: StateStatus.LOSE,
+				turn: StateTurn.GAMEOVER
 			}
 		};
 	}
