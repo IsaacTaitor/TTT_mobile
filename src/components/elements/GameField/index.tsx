@@ -14,9 +14,9 @@ const GameField: React.FC<GameFieldProps> = (props: GameFieldProps) => {
 	const viewIcon = (state: StateCell): React.ReactElement => {
 		switch (state) {
 		case StateCell.X:
-			return <Icon name={"md-close"} style={{ color: "grey", fontSize: 80 }} />;
+			return <Icon name={"md-close"} style={styles.crossIcon} />;
 		case StateCell.O:
-			return <Icon name={"md-radio-button-off"} style={{ color: "#299ddc", fontSize: 70 }} />;
+			return <Icon name={"md-radio-button-off"} style={styles.noughtIcon} />;
 		}
 	};
 
@@ -45,7 +45,9 @@ const GameField: React.FC<GameFieldProps> = (props: GameFieldProps) => {
 										<View style={[styles.cell,
 											k === 2 ? null : styles.borderRightWidth,
 											styleLastRow(i)]}>
-											{viewIcon(row[k])}
+											<View style={styles.viewIcon}>
+												{viewIcon(row[k])}
+											</View>
 										</View>
 									</TouchableWithoutFeedback>
 								)

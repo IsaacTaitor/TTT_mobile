@@ -13,7 +13,7 @@ const initialState: Games = {
 		opponent: "AI",
 		turn: StateTurn.PLAYER,
 		status: PLAYING,
-		field: [[Empty, X, Empty], [Empty, Empty, O], [O, Empty, Empty]]
+		field: [[Empty, Empty, Empty], [Empty, Empty, Empty], [Empty, Empty, Empty]]
 	}
 };
 

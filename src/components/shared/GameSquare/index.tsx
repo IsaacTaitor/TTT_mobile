@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "native-base";
 import { styles } from "./styles";
-import { TouchableNativeFeedback } from "react-native";
+import { TouchableHighlight } from "react-native";
 import moment from "moment";
 import "moment-timezone";
 
@@ -20,15 +20,14 @@ const GamesSquare: React.FC<GamesSquareProps> = (props: GamesSquareProps) => {
 	};
 
 	return (
-		<TouchableNativeFeedback
-			onPress={onPress}>
-			<View
-				style={[styles.body, props.isLast ? null : { marginRight: "2%" }]}
-			>
+		<TouchableHighlight
+			onPress={onPress}
+			style={[styles.body, props.isLast ? null : { marginRight: "2%" }]}>
+			<View style={{width: "100%", height: "100%"}}>
 				<Text style={styles.title}>{props.opponent}</Text>
 				<Text style={{ fontSize: 10, position: "absolute", bottom: 2, right: 1 }}>{moment(props.time).format("HH:mm:ss")}</Text>
-			</View >
-		</TouchableNativeFeedback>
+			</View>
+		</TouchableHighlight>
 	);
 };
 
