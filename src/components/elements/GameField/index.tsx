@@ -26,36 +26,31 @@ const GameField: React.FC<GameFieldProps> = (props: GameFieldProps) => {
 		}
 	};
 
+	const onPress = (state: StateCell, coordinates: { x: number; y: number }): void => {
+		if ((props.game.turn === StateTurn.PLAYER) && (props.game.status === StateStatus.PLAYING) && (state === StateCell.Empty)) {
+			props.editField(props.game.id, StateTurn.PLAYER, coordinates);
+		}
+	};
+
 	return (
-		<View style={{ alignItems: "center" }}>
-			<View style={{ flexDirection: "column" }}>
-				{
-					props.game.field.map((row: Array<StateCell>, i: number) =>
-						<View key={i} style={{ flexDirection: "row" }}>
-							{
-								row.map((state: StateCell, k: number) =>
-									<TouchableWithoutFeedback
-										key={i + "" + k}
-										onPress={(): void => {
-											if ((props.game.turn === StateTurn.PLAYER) && (props.game.status === StateStatus.PLAYING) && (row[k] === StateCell.Empty)) {
-												props.editField(props.game.id, StateTurn.PLAYER, { x: i, y: k });
-											}
-										}
-										}>
-										<View style={[styles.cell,
-											k === 2 ? null : styles.borderRightWidth,
-											styleLastRow(i)]}>
-											<View style={styles.viewIcon}>
-												{viewIcon(row[k])}
-											</View>
+		<View style={styles.grid}>
+			{
+				props.game.field.map((row: Array<StateCell>, i: number) =>
+					<View key={i} style={styles.row}>
+						{
+							row.map((state: StateCell, k: number) =>
+								<TouchableWithoutFeedback
+									key={i + "" + k}
+									onPress={(): void => onPress(state, { x: i, y: k })}>
+									<View style={[styles.cell, k === 2 ? null : styles.borderRightWidth, styleLastRow(i)]}>
+										<View style={styles.viewIcon}>
+											{viewIcon(row[k])}
 										</View>
-									</TouchableWithoutFeedback>
-								)
-							}
-						</View>
-					)
-				}
-			</View>
+									</View>
+								</TouchableWithoutFeedback>
+							)}
+					</View>
+				)}
 		</View>
 	);
 };

@@ -2,8 +2,7 @@ import React from "react";
 import { Text, View } from "native-base";
 import { styles } from "./styles";
 import { TouchableHighlight } from "react-native";
-import moment from "moment";
-import "moment-timezone";
+import moment from "../../../utils/moment";
 
 interface GamesSquareProps {
 	opponent: string;
@@ -13,8 +12,6 @@ interface GamesSquareProps {
 }
 
 const GamesSquare: React.FC<GamesSquareProps> = (props: GamesSquareProps) => {
-	moment.locale("en");
-	moment.tz.setDefault("UTC");
 	const onPress = (): void => {
 		props.onPress();
 	};

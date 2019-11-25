@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { StatusBar } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch, AnyAction } from "redux";
 import { Container, Content, Icon, Fab, Input, Text, View } from "native-base";
@@ -67,6 +68,7 @@ class HomeScreen extends Component<HomeScreenProps> {
 		return (
 			<Container style={styles.container}>
 				<Headers />
+				<StatusBar barStyle="light-content"/>
 				<Content style={styles.content}>
 					<Input
 						style={styles.inputName}

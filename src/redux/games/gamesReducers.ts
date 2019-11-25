@@ -78,7 +78,7 @@ export function gamesReducer(state: Games = initialState, action: AnyAction): Ga
 				time: 0,
 				opponent: "AI",
 				status: StateStatus.PLAYING,
-				turn: StateTurn.PLAYER,
+				turn: Math.floor(Math.random() * 2),
 				field: [[Empty, Empty, Empty], [Empty, Empty, Empty], [Empty, Empty, Empty]]
 			}
 		};

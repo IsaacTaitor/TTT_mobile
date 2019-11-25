@@ -1,14 +1,16 @@
 import React, { Component } from "react";
+import { StatusBar } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch, AnyAction } from "redux";
-import { Container, Content, Text, Icon, View, Button } from "native-base";
+import { Container, Content, Text, View, Button } from "native-base";
 import Headers from "../../components/shared/Headers";
 import GameField from "../../components/elements/GameField";
-import { Game, Games, ApplicationStore, StateStatus, StateTurn } from "../../types/store";
+import ScoreBoard from "../../components/elements/ScoreBoard";
+
+import { Games, ApplicationStore, StateStatus, StateTurn } from "../../types/store";
 import { styles } from "./styles";
 import { turnAI } from "../../utils";
-import moment from "moment";
-import "moment-timezone";
+import moment from "../../utils/moment";
 
 import { editField, surrender, changeTime } from "../../redux/games/gamesActions";
 
@@ -62,20 +64,7 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 		this.props.changeTime(id, this.props.games[id].time + 1000);
 	}
 
-	private viewScoreboard = (playerName: string, game: Game): React.ReactElement => {
-		return (
-			<View style={styles.scoreBoard}>
-				<View style={[styles.player, game.turn === StateTurn.PLAYER ? { borderBottomWidth: 3 } : null]}>
-					<Text>{playerName}</Text>
-					<Icon name={"md-close"} style={{ color: "grey", paddingLeft: 10 }} />
-				</View>
-				<View style={[styles.opponent, game.turn === StateTurn.AI ? { borderBottomWidth: 3 } : null]}>
-					<Icon name={"md-radio-button-off"} style={{ color: "#299ddc", paddingRight: 10 }} />
-					<Text>{game.opponent}</Text>
-				</View>
-			</View>
-		);
-	}
+	
 
 	private viewStatusGame = (status: StateStatus): React.ReactElement => {
 		let text = null;
@@ -111,8 +100,6 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 	}
 
 	private viewTimeGame = (time: Date): React.ReactElement => {
-		moment.locale("en");
-		moment.tz.setDefault("UTC");
 		return (
 			<View style={{ justifyContent: "center", alignItems: "center", height: 70 }}>
 				<Text style={{ fontSize: 20 }}>
@@ -128,8 +115,9 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 		return (
 			<Container style={styles.container}>
 				<Headers />
+				<StatusBar barStyle="light-content"/>
 				<Content style={styles.content}>
-					{this.viewScoreboard(playerName, games[id])}
+					<ScoreBoard playerName={playerName} game={games[id]} />
 					<GameField game={games[id]} editField={editField} />
 					{this.viewTimeGame(new Date(games[id].time))}
 					{this.viewStatusGame(games[id].status)}

@@ -1,6 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+	grid: {
+		alignItems: "center",
+		flexDirection: "column"
+	},
+	row: {
+		flexDirection: "row"
+	},
 	cell: {
 		borderColor: "#f2ca4b",
 		width: 70,
