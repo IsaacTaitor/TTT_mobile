@@ -20,6 +20,11 @@ export interface Games {
 	[id: string]: Game;
 }
 
+export interface Coordinates {
+	x: number;
+	y: number;
+}
+
 export enum StateCell {
 	Empty,
 	X,

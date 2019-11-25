@@ -11,37 +11,39 @@ import { renamePlayer } from "../../redux/player/playerActions";
 import { createNewGame } from "../../redux/games/gamesActions";
 
 interface HomeScreenProps {
-	playerName?: string;
-	games?: Games;
-	navigation?: any;
-	createNewGame?(id: string): void;
-	renamePlayer?(newName: string): void;
+	playerName: string;
+	games: Games;
+	navigation: any;
+	createNewGame(id: string): void;
+	renamePlayer(newName: string): void;
 }
 
-const mapStateToProps = (state: ApplicationStore): HomeScreenProps => ({
+const mapStateToProps = (state: ApplicationStore) => ({
 	playerName: state.playerStore.playerName,
 	games: state.gamesStore
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): HomeScreenProps => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
 	return {
 		renamePlayer: bindActionCreators(renamePlayer, dispatch),
 		createNewGame: bindActionCreators(createNewGame, dispatch)
 	};
 };
 
-
 class HomeScreen extends Component<HomeScreenProps> {
 
-	onEndEditing = (e: any): void => {
-		this.props.renamePlayer(e.nativeEvent.text);
+	private onEndEditing = (e: any): void => {
+		if (e.nativeEvent.text) {
+			this.props.renamePlayer(e.nativeEvent.text);
+		}
 	}
 
-	navigateToGame = (id: string): void => {
-		this.props.navigation.navigate("Game", { playerName: this.props.playerName, id });
+	private navigateToGame = (id: string): void => {
+		const { playerName, navigation } = this.props;
+		navigation.navigate("Game", { playerName, id });
 	}
 
-	createNewGame = (): void => {
+	private createNewGame = (): void => {
 		const id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
 		this.props.createNewGame(id);
 
@@ -70,7 +72,7 @@ class HomeScreen extends Component<HomeScreenProps> {
 		return (
 			<Container style={styles.container}>
 				<Headers />
-				<StatusBar barStyle="light-content"/>
+				<StatusBar barStyle="light-content" />
 				<Content style={styles.content}>
 					<Input
 						style={styles.inputName}

@@ -1,4 +1,4 @@
-import { Game, StateTurn, StateCell } from "../types/store";
+import { Game, StateTurn, StateCell, Coordinates } from "../types/store";
 
 const findEmptyCell = (field: Game["field"]): Array<number> => {
 	const emptyCells = [];
@@ -12,7 +12,7 @@ const findEmptyCell = (field: Game["field"]): Array<number> => {
 	return emptyCells;
 };
 
-const getCoordinates = (emptyCells: Array<number>): { x: number; y: number } => {
+const getCoordinates = (emptyCells: Array<number>): Coordinates => {
 	const rand = Math.floor(Math.random() * emptyCells.length);
 	return { x: Math.floor(emptyCells[rand] / 3), y: emptyCells[rand] % 3 };
 };

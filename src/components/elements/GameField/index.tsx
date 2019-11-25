@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Icon } from "native-base";
 import { styles } from "./styles";
-import { StateCell, StateTurn, StateStatus, Game } from "../../../types/store";
+import { StateCell, StateTurn, StateStatus, Game, Coordinates } from "../../../types/store";
 import { TouchableWithoutFeedback } from "react-native";
 
 interface GameFieldProps {
 	game: Game;
-	editField(id: string, turn: StateTurn, coordinates: { x: number; y: number }): Function;
+	editField(id: string, turn: StateTurn, coordinates: Coordinates): Function;
 }
 
 const GameField: React.FC<GameFieldProps> = (props: GameFieldProps) => {
@@ -20,13 +20,13 @@ const GameField: React.FC<GameFieldProps> = (props: GameFieldProps) => {
 		}
 	};
 
-	const styleLastRow = (i: number): any => {
+	const styleLastRow = (i: number) => {
 		if (!(i === 2)) {
 			return styles.borderBottomWidth;
 		}
 	};
 
-	const onPress = (state: StateCell, coordinates: { x: number; y: number }): void => {
+	const onPress = (state: StateCell, coordinates: Coordinates): void => {
 		if ((props.game.turn === StateTurn.PLAYER) && (props.game.status === StateStatus.PLAYING) && (state === StateCell.Empty)) {
 			props.editField(props.game.id, StateTurn.PLAYER, coordinates);
 		}

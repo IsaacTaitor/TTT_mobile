@@ -25,5 +25,8 @@ export const styles = StyleSheet.create({
 	noughtIcon: {
 		color: "#299ddc",
 		paddingRight: 10
+	},
+	selected: {
+		borderBottomWidth: 3
 	}
 });

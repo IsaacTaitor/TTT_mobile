@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 
 import { CREATE_NEW_GAME, EDIT_FIELD, SURRENDER, CHANGETIME } from "../../types/actions";
-import { Game, Games, StateCell, StateStatus, StateTurn } from "../../types/store";
+import { Game, Games, StateCell, StateStatus, StateTurn, Coordinates } from "../../types/store";
 
 const { Empty, X, O } = StateCell;
 const { PLAYING, WIN, LOSE, DRAW } = StateStatus;
@@ -17,7 +17,7 @@ const initialState: Games = {
 	}
 };
 
-const editField = (oldField: Game["field"], turn: StateTurn, coordinates: { x: number; y: number }): Game["field"] => {
+const editField = (oldField: Game["field"], turn: StateTurn, coordinates: Coordinates): Game["field"] => {
 	const newField: Game["field"] = new Object(oldField) as Game["field"];
 
 	newField[coordinates.x][coordinates.y] = turn === StateTurn.AI ? O : X;

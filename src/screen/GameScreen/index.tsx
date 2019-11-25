@@ -7,7 +7,7 @@ import Headers from "../../components/shared/Headers";
 import GameField from "../../components/elements/GameField";
 import ScoreBoard from "../../components/elements/ScoreBoard";
 
-import { Games, ApplicationStore, StateStatus, StateTurn } from "../../types/store";
+import { Games, ApplicationStore, StateStatus, StateTurn, Coordinates } from "../../types/store";
 import { styles } from "./styles";
 import { turnAI } from "../../utils";
 import moment from "../../utils/moment";
@@ -17,7 +17,7 @@ import { editField, surrender, changeTime } from "../../redux/games/gamesActions
 interface GameScreenProps {
 	navigation: any;
 	games: Games;
-	editField(id: string, turn: StateTurn, coordinates: { x: number; y: number }): Function;
+	editField(id: string, turn: StateTurn, coordinates: Coordinates): Function;
 	changeTime(id: string, time: number): Function;
 	surrender(id: string): Function;
 }

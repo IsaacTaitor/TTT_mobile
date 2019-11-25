@@ -11,7 +11,7 @@ class RootComponent extends Component<{}, RootComponentState> {
 
 	state: RootComponentState = { isLoaded: false };
 
-	async componentDidMount(): Promise<any> {
+	async componentDidMount() {
 		console.disableYellowBox = true;
 		await Font.loadAsync({
 			"Roboto": require("../node_modules/native-base/Fonts/Roboto.ttf"),

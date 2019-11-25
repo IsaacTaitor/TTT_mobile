@@ -1,6 +1,6 @@
 import { Dispatch, Action } from "redux";
 import { CREATE_NEW_GAME, EDIT_FIELD, SURRENDER, CHANGETIME } from "../../types/actions";
-import { StateTurn } from "../../types/store";
+import { StateTurn, Coordinates } from "../../types/store";
 
 export const createNewGame = (id: string) => {
 	return (dispatch: Dispatch<Action>): void => {
@@ -8,7 +8,7 @@ export const createNewGame = (id: string) => {
 	};
 };
 
-export const editField = (id: string, turn: StateTurn, coordinates: { x: number; y: number }) => {
+export const editField = (id: string, turn: StateTurn, coordinates: Coordinates) => {
 	return (dispatch: Dispatch<Action>): void => {
 		dispatch({ type: EDIT_FIELD, payload: { id, turn, coordinates } });
 	};
