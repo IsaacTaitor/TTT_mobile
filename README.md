@@ -12,7 +12,7 @@ yarn install
 expo start
 ```
 
-+ download Expo app to your phone, run by code
++ download Expo app to your phone and scan QR code (android only)
 ##### or
 + run on emulator
 ## For run on iOS too need:
