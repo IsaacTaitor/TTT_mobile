@@ -7,9 +7,9 @@ https://expo.io/@isaactaitor/TTT_mobile
 ## Build & Run
 
 ```
-yarn add global expo
+yarn add global expo-cli
 yarn install
-expo start
+yarn start
 ```
 
 + download Expo app to your phone and scan QR code (android only)
