@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 
-import { CREATE_NEW_GAME, EDIT_FIELD, SURRENDER } from "../../types/actions";
+import { CREATE_NEW_GAME, EDIT_FIELD, SURRENDER, CHANGETIME } from "../../types/actions";
 import { Game, Games, StateCell, StateStatus, StateTurn } from "../../types/store";
 
 const { Empty, X, O } = StateCell;
@@ -9,7 +9,7 @@ const { PLAYING, WIN, LOSE, DRAW } = StateStatus;
 const initialState: Games = {
 	"f5d47a64": {
 		id: "f5d47a64",
-		begin: 1574427290994,
+		time: 0,
 		opponent: "AI",
 		turn: StateTurn.PLAYER,
 		status: PLAYING,
@@ -75,7 +75,7 @@ export function gamesReducer(state: Games = initialState, action: AnyAction): Ga
 			...state,
 			[payload.id]: {
 				id: payload.id,
-				begin: new Date().getTime(),
+				time: 0,
 				opponent: "AI",
 				status: StateStatus.PLAYING,
 				turn: StateTurn.PLAYER,
@@ -103,6 +103,15 @@ export function gamesReducer(state: Games = initialState, action: AnyAction): Ga
 				...state[payload.id],
 				status: StateStatus.LOSE,
 				turn: StateTurn.GAMEOVER
+			}
+		};
+	}
+	case CHANGETIME: {
+		return {
+			...state,
+			[payload.id]: {
+				...state[payload.id],
+				time: payload.time ,
 			}
 		};
 	}

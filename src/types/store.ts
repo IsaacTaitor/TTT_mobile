@@ -9,7 +9,7 @@ export interface PlayerName {
 
 export interface Game {
 	id: string;
-	begin: number;
+	time: number;
 	opponent: string;
 	status: StateStatus;
 	turn: StateTurn;

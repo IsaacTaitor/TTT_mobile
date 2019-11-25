@@ -7,35 +7,58 @@ import GameField from "../../components/elements/GameField";
 import { Game, Games, ApplicationStore, StateStatus, StateTurn } from "../../types/store";
 import { styles } from "./styles";
 import { turnAI } from "../../utils";
+import Moment from "moment-timezone";
 
-import { editField, surrender } from "../../redux/games/gamesActions";
+import { editField, surrender, changeTime } from "../../redux/games/gamesActions";
 
 interface GameScreenProps {
 	navigation: any;
 	games: Games;
 	editField(id: string, turn: StateTurn, coordinates: { x: number; y: number }): Function;
+	changeTime(id: string, time: number): Function;
 	surrender(id: string): Function;
 }
 
-const mapStateToProps = (state: ApplicationStore): any => ({
-	games: state.gamesStore
-});
+interface GameScreenState {
+	turnAI: boolean;
+	intervalId: number;
+}
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): any => {
-	return {
-		editField: bindActionCreators(editField, dispatch),
-		surrender: bindActionCreators(surrender, dispatch)
-	};
-};
-
-class GameScreen extends Component<GameScreenProps> {
+class GameScreen extends Component<GameScreenProps, GameScreenState> {
+	constructor(props) {
+		super(props);
+		this.state = { turnAI: true, intervalId: 0 };
+	}
 
 	componentDidUpdate(): void {
 		const { id } = this.props.navigation.state.params;
 		const { games, editField } = this.props;
 		if (games[id].turn === StateTurn.AI) {
-			setTimeout(() => turnAI(id, games[id].field, editField), 0);
+			if (this.state.turnAI) {
+				setTimeout(() => turnAI(id, games[id].field, editField), 0);
+				this.setState({ turnAI: false });
+			}
+		} else if (games[id].turn === StateTurn.PLAYER) {
+			if (!this.state.turnAI) {
+				this.setState({ turnAI: true });
+			}
+		} else {
+			clearInterval(this.state.intervalId);
 		}
+	}
+
+	componentDidMount(): void {
+		const { id } = this.props.navigation.state.params;
+		const intervalId = setInterval(() => this.timer(id), 1000);
+		this.setState({ intervalId });
+	}
+
+	componentWillUnmount(): void {
+		clearInterval(this.state.intervalId);
+	}
+
+	timer = (id): void => {
+		this.props.changeTime(id, this.props.games[id].time + 1000);
 	}
 
 	private viewScoreboard = (playerName: string, game: Game): React.ReactElement => {
@@ -66,7 +89,7 @@ class GameScreen extends Component<GameScreenProps> {
 			<View style={{
 				justifyContent: "center",
 				alignItems: "center",
-				height: 100
+				height: 70
 			}}>
 				{text}
 			</View>);
@@ -86,6 +109,18 @@ class GameScreen extends Component<GameScreenProps> {
 		);
 	}
 
+	private viewTimeGame = (time: Date): React.ReactElement => {
+		Moment.locale("ru");
+		Moment.tz.setDefault("UTC");
+		return (
+			<View style={{ justifyContent: "center", alignItems: "center", height: 70 }}>
+				<Text style={{ fontSize: 20 }}>
+					{Moment(time).format("HH:mm:ss")}
+				</Text>
+			</View>
+		);
+	}
+
 	render(): React.ReactElement {
 		const { id, playerName } = this.props.navigation.state.params;
 		const { games, editField } = this.props;
@@ -95,6 +130,7 @@ class GameScreen extends Component<GameScreenProps> {
 				<Content style={styles.content}>
 					{this.viewScoreboard(playerName, games[id])}
 					<GameField game={games[id]} editField={editField} />
+					{this.viewTimeGame(new Date(games[id].time))}
 					{this.viewStatusGame(games[id].status)}
 					{this.viewButton(games[id].status, id)}
 				</Content>
@@ -102,5 +138,17 @@ class GameScreen extends Component<GameScreenProps> {
 		);
 	}
 }
+
+const mapStateToProps = (state: ApplicationStore): any => ({
+	games: state.gamesStore
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): any => {
+	return {
+		editField: bindActionCreators(editField, dispatch),
+		surrender: bindActionCreators(surrender, dispatch),
+		changeTime: bindActionCreators(changeTime, dispatch)
+	};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameScreen);

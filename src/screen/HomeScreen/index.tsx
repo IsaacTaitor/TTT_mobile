@@ -56,6 +56,7 @@ class HomeScreen extends Component<HomeScreenProps> {
 				<GameSquare
 					onPress={(): void => this.navigateToGame(id)}
 					key={id}
+					time={this.props.games[id].time}
 					opponent={this.props.games[id].opponent}
 					isLast={!((key + 1) % 4)} />
 			)}

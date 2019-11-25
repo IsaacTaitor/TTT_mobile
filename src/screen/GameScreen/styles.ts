@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
 		backgroundColor: "#009789",
 		width: 125,
 		height: 50,
-		justifyContent: "center", alignItems: "center"
+		justifyContent: "center",
+		alignItems: "center"
 	}
 });
