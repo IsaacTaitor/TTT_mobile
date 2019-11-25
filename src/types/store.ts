@@ -1,6 +1,6 @@
 export interface ApplicationStore {
 	playerStore: PlayerName;
-	gamesStore: Game;
+	gamesStore: Games;
 }
 
 export interface PlayerName {

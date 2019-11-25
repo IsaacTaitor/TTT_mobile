@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { StatusBar } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch, AnyAction } from "redux";
-import { Container, Content, Icon, Fab, Input, Text, View } from "native-base";
+import { Container, Content, Icon, Fab, Input, View } from "native-base";
 import { ApplicationStore, Games } from "../../types/store";
 import Headers from "../../components/shared/Headers";
 import GameSquare from "../../components/shared/GameSquare";
@@ -11,19 +11,19 @@ import { renamePlayer } from "../../redux/player/playerActions";
 import { createNewGame } from "../../redux/games/gamesActions";
 
 interface HomeScreenProps {
-	playerName: string;
-	games: Games;
-	navigation: any;
-	createNewGame(id: string): void;
-	renamePlayer(newName: string): void;
+	playerName?: string;
+	games?: Games;
+	navigation?: any;
+	createNewGame?(id: string): void;
+	renamePlayer?(newName: string): void;
 }
 
-const mapStateToProps = (state: ApplicationStore): any => ({
+const mapStateToProps = (state: ApplicationStore): HomeScreenProps => ({
 	playerName: state.playerStore.playerName,
 	games: state.gamesStore
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): any => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): HomeScreenProps => {
 	return {
 		renamePlayer: bindActionCreators(renamePlayer, dispatch),
 		createNewGame: bindActionCreators(createNewGame, dispatch)
@@ -51,14 +51,16 @@ class HomeScreen extends Component<HomeScreenProps> {
 			}, 0);
 	}
 
-	private viewGames = (): React.ReactElement => {
+	private viewGames = (games): React.ReactElement => {
 		return <View style={styles.games}>
 			{Object.keys(this.props.games).map((id, key) =>
 				<GameSquare
 					onPress={(): void => this.navigateToGame(id)}
 					key={id}
-					time={this.props.games[id].time}
-					opponent={this.props.games[id].opponent}
+					time={games[id].time}
+					opponent={games[id].opponent}
+					playerName={this.props.playerName}
+					status={games[id].status}
 					isLast={!((key + 1) % 4)} />
 			)}
 		</View>;
@@ -74,7 +76,7 @@ class HomeScreen extends Component<HomeScreenProps> {
 						style={styles.inputName}
 						defaultValue={this.props.playerName}
 						onEndEditing={this.onEndEditing} />
-					{this.viewGames()}
+					{this.viewGames(this.props.games)}
 				</Content>
 				<Fab
 					style={styles.buttonNewGame}
