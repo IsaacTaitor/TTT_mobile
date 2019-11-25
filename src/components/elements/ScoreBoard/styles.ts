@@ -17,5 +17,13 @@ export const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		paddingTop: 10,
 		paddingBottom: 20
+	},
+	crossIcon: {
+		color: "grey",
+		paddingLeft: 10
+	},
+	noughtIcon: {
+		color: "#299ddc",
+		paddingRight: 10
 	}
 });

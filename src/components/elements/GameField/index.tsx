@@ -55,4 +55,4 @@ const GameField: React.FC<GameFieldProps> = (props: GameFieldProps) => {
 	);
 };
 
-export default GameField;
+export default React.memo(GameField);

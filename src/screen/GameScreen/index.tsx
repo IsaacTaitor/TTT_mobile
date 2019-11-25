@@ -60,12 +60,10 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 		clearInterval(this.state.intervalId);
 	}
 
-	timer = (id): void => {
+	private timer = (id): void => {
 		this.props.changeTime(id, this.props.games[id].time + 1000);
 	}
-
 	
-
 	private viewStatusGame = (status: StateStatus): React.ReactElement => {
 		let text = null;
 		if (status === StateStatus.WIN) {
