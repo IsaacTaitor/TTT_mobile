@@ -11,7 +11,9 @@ yarn add global expo-cli
 yarn install
 yarn start
 ```
-
+#####
++ connect to the same network
+#####
 + download Expo app to your phone and scan QR code (android only)
 ##### or
 + run on emulator
@@ -21,4 +23,6 @@ yarn start
 ```
 expo login
 ```
-+ be on local network 
+
+## Warning
+Possible error on run app, for solutions may help downgrading Node.js to 12.8 versions
