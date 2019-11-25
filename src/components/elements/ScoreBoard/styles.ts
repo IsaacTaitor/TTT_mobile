@@ -4,12 +4,16 @@ export const styles = StyleSheet.create({
 	player: {
 		height: 50,
 		flexDirection: "row",
-		alignItems: "center"
+		alignItems: "center",
+		borderBottomWidth: 3,
+		borderColor: "#efefef"
 	},
 	opponent: {
 		height: 50,
 		flexDirection: "row",
-		alignItems: "center"
+		alignItems: "center",
+		borderBottomWidth: 3,
+		borderColor: "#efefef"
 	},
 	scoreBoard: {
 		flex: 1,
@@ -27,6 +31,6 @@ export const styles = StyleSheet.create({
 		paddingRight: 10
 	},
 	selected: {
-		borderBottomWidth: 3
+		borderColor: "black"
 	}
 });
