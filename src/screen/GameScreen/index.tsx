@@ -7,7 +7,8 @@ import GameField from "../../components/elements/GameField";
 import { Game, Games, ApplicationStore, StateStatus, StateTurn } from "../../types/store";
 import { styles } from "./styles";
 import { turnAI } from "../../utils";
-import Moment from "moment-timezone";
+import moment from "moment";
+import "moment-timezone";
 
 import { editField, surrender, changeTime } from "../../redux/games/gamesActions";
 
@@ -110,12 +111,12 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 	}
 
 	private viewTimeGame = (time: Date): React.ReactElement => {
-		Moment.locale("ru");
-		Moment.tz.setDefault("UTC");
+		moment.locale("en");
+		moment.tz.setDefault("UTC");
 		return (
 			<View style={{ justifyContent: "center", alignItems: "center", height: 70 }}>
 				<Text style={{ fontSize: 20 }}>
-					{Moment(time).format("HH:mm:ss")}
+					{moment(time).format("HH:mm:ss")}
 				</Text>
 			</View>
 		);

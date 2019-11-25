@@ -10,6 +10,7 @@
     "eslint:dump": "eslint --print-config ./.eslintrc.json"
   },
   "dependencies": {
+    "@types/moment-timezone": "^0.5.12",
     "expo": "^35.0.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
