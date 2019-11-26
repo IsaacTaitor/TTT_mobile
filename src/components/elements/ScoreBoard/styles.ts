@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
 	player: {
 		height: 50,
+		maxWidth: 100,
 		flexDirection: "row",
 		alignItems: "center",
 		borderBottomWidth: 3,

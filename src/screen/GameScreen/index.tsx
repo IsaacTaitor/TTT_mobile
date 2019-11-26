@@ -6,16 +6,17 @@ import { Container, Content, Text, View, Button } from "native-base";
 import Headers from "../../components/shared/Headers";
 import GameField from "../../components/elements/GameField";
 import ScoreBoard from "../../components/elements/ScoreBoard";
+import { NavigationParams, NavigationScreenProp, NavigationState } from "react-navigation";
 
 import { Games, ApplicationStore, StateStatus, StateTurn, Coordinates } from "../../types/store";
 import { styles } from "./styles";
-import { turnAI } from "../../utils";
+import { turnAI } from "../../utils/turnAI";
 import moment from "../../utils/moment";
 
 import { editField, surrender, changeTime } from "../../redux/games/gamesActions";
 
 interface GameScreenProps {
-	navigation: any;
+	navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 	games: Games;
 	editField(id: string, turn: StateTurn, coordinates: Coordinates): Function;
 	changeTime(id: string, time: number): Function;
@@ -83,7 +84,9 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 			</View>);
 	}
 
-	private goBack = (): void => this.props.navigation.goBack();
+	private goBack = (): void => {
+		this.props.navigation.goBack();
+	};
 
 	private viewButton = (status: StateStatus, id: string): React.ReactElement => {
 		return (
@@ -126,11 +129,11 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 	}
 }
 
-const mapStateToProps = (state: ApplicationStore): any => ({
+const mapStateToProps = (state: ApplicationStore) => ({
 	games: state.gamesStore
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>): any => {
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
 	return {
 		editField: bindActionCreators(editField, dispatch),
 		surrender: bindActionCreators(surrender, dispatch),

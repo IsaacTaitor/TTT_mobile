@@ -11,7 +11,7 @@ interface ScoreboardProps {
 const Scoreboard: React.FC<ScoreboardProps> = ({ playerName, game }: ScoreboardProps) => (
 	<View style={styles.scoreBoard}>
 		<View style={[styles.player, game.turn === StateTurn.PLAYER ? styles.selected : null]}>
-			<Text>{playerName}</Text>
+			<Text numberOfLines={1} >{playerName}</Text>
 			<Icon name={"md-close"} style={styles.crossIcon} />
 		</View>
 		<View style={[styles.opponent, game.turn === StateTurn.AI ? styles.selected : null]}>

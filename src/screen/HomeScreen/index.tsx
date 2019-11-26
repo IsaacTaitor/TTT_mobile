@@ -9,11 +9,12 @@ import GameSquare from "../../components/shared/GameSquare";
 import { styles } from "./styles";
 import { renamePlayer } from "../../redux/player/playerActions";
 import { createNewGame } from "../../redux/games/gamesActions";
+import { NavigationParams, NavigationScreenProp, NavigationState } from "react-navigation";
 
 interface HomeScreenProps {
 	playerName: string;
 	games: Games;
-	navigation: any;
+	navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 	createNewGame(id: string): void;
 	renamePlayer(newName: string): void;
 }
@@ -32,7 +33,7 @@ const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
 
 class HomeScreen extends Component<HomeScreenProps> {
 
-	private onEndEditing = (e: any): void => {
+	private onEndEditing = (e): void => {
 		if (e.nativeEvent.text) {
 			this.props.renamePlayer(e.nativeEvent.text);
 		}

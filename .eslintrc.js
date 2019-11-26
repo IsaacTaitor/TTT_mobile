@@ -47,6 +47,7 @@ module.exports = {
         /*"linebreak-style": ["error", "unix"]*/
         /*"linebreak-style": ["error", "windows"],*/
         "linebreak-style": 0,
+        "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/ban-ts-ignore": "off"
     }
 };
