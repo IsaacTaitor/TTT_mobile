@@ -31,7 +31,10 @@ interface GameScreenState {
 class GameScreen extends Component<GameScreenProps, GameScreenState> {
 	constructor(props) {
 		super(props);
-		this.state = { turnAI: true, intervalId: 0 };
+		this.state = {
+			turnAI: true,
+			intervalId: 0
+		};
 	}
 
 	componentDidUpdate(): void {
@@ -64,37 +67,35 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 	private timer = (id): void => {
 		this.props.changeTime(id, this.props.games[id].time + 1000);
 	}
-	
-	private viewStatusGame = (status: StateStatus): React.ReactElement => {
-		let text = null;
-		if (status === StateStatus.WIN) {
-			text = <Text style={{ fontSize: 18, color: "green" }}>YOU WIN!</Text>;
-		} else if (status === StateStatus.LOSE) {
-			text = <Text style={{ fontSize: 18, color: "red" }}>YOU LOSE</Text>;
-		} else if (status === StateStatus.DRAW) {
-			text = <Text style={{ fontSize: 18, color: "black" }}>DRAW</Text>;
-		}
-		return (
-			<View style={{
-				justifyContent: "center",
-				alignItems: "center",
-				height: 70
-			}}>
-				{text}
-			</View>);
-	}
 
-	private goBack = (): void => {
-		this.props.navigation.goBack();
-	};
+	private viewStatusGame = (status: StateStatus): React.ReactElement => {
+		if (status !== StateStatus.PLAYING) {
+			let text = null;
+			switch (status) {
+			case StateStatus.WIN:
+				text = <Text style={styles.statusTextWin}>YOU WIN!</Text>;
+				break;
+			case StateStatus.LOSE:
+				text = <Text style={styles.statusTextLose}>YOU LOSE</Text>;
+				break;
+			case StateStatus.DRAW:
+				text = <Text style={styles.statusTextDraw}>DRAW</Text>;
+				break;
+			}
+			return (
+				<View style={styles.statusGameView}>
+					{text}
+				</View>);
+		}
+	}
 
 	private viewButton = (status: StateStatus, id: string): React.ReactElement => {
 		return (
-			<View style={{ justifyContent: "center", alignItems: "center" }}>
+			<View style={styles.viewButton}>
 				{
 					status === StateStatus.PLAYING
-						? <Button style={styles.button} onPress={(): Function => this.props.surrender(id)}><Text>SURRENDER</Text></Button >
-						: <Button style={styles.button} onPress={this.goBack}><Text>BACK</Text></Button >
+						? <Button style={styles.button} onPress={() => this.props.surrender(id)}><Text>SURRENDER</Text></Button >
+						: <Button style={styles.button} onPress={() => this.props.navigation.goBack()}><Text>BACK</Text></Button >
 				}
 			</View>
 		);
@@ -102,8 +103,8 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 
 	private viewTimeGame = (time: Date): React.ReactElement => {
 		return (
-			<View style={{ justifyContent: "center", alignItems: "center", height: 70 }}>
-				<Text style={{ fontSize: 20 }}>
+			<View style={styles.viewTimeGame}>
+				<Text style={styles.time}>
 					{moment(time).format("HH:mm:ss")}
 				</Text>
 			</View>
@@ -116,7 +117,7 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 		return (
 			<Container style={styles.container}>
 				<Headers />
-				<StatusBar barStyle="light-content"/>
+				<StatusBar barStyle="light-content" />
 				<Content style={styles.content}>
 					<ScoreBoard playerName={playerName} game={games[id]} />
 					<GameField game={games[id]} editField={editField} />
