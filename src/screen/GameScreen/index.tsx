@@ -69,8 +69,8 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 	}
 
 	private viewStatusGame = (status: StateStatus): React.ReactElement => {
+		let text = null;
 		if (status !== StateStatus.PLAYING) {
-			let text = null;
 			switch (status) {
 			case StateStatus.WIN:
 				text = <Text style={styles.statusTextWin}>YOU WIN!</Text>;
@@ -82,11 +82,11 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 				text = <Text style={styles.statusTextDraw}>DRAW</Text>;
 				break;
 			}
-			return (
-				<View style={styles.statusGameView}>
-					{text}
-				</View>);
 		}
+		return (
+			<View style={styles.statusGameView}>
+				{text}
+			</View>);
 	}
 
 	private viewButton = (status: StateStatus, id: string): React.ReactElement => {
