@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { StatusBar } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch, AnyAction } from "redux";
-import { Container, Content, Icon, Fab, Input, View } from "native-base";
+import { Container, Content, Icon, Fab, Input } from "native-base";
 import { ApplicationStore, Games } from "../../types/store";
 import Headers from "../../components/shared/Headers";
-import GameSquare from "../../components/shared/GameSquare";
-import { styles } from "./styles";
+import GamesView from "../../components/elements/GamesView";
 import { renamePlayer } from "../../redux/player/playerActions";
 import { createNewGame } from "../../redux/games/gamesActions";
 import { NavigationParams, NavigationScreenProp, NavigationState } from "react-navigation";
+import { styles } from "./styles";
 
 interface HomeScreenProps {
 	playerName: string;
@@ -54,21 +54,6 @@ class HomeScreen extends Component<HomeScreenProps> {
 			}, 0);
 	}
 
-	private viewGames = (games): React.ReactElement => {
-		return <View style={styles.games}>
-			{Object.keys(this.props.games).map((id, key) =>
-				<GameSquare
-					onPress={(): void => this.navigateToGame(id)}
-					key={id}
-					time={games[id].time}
-					opponent={games[id].opponent}
-					playerName={this.props.playerName}
-					status={games[id].status}
-					isLast={!((key + 1) % 4)} />
-			)}
-		</View>;
-	}
-
 	render(): React.ReactElement {
 		return (
 			<Container style={styles.container}>
@@ -79,7 +64,7 @@ class HomeScreen extends Component<HomeScreenProps> {
 						style={styles.inputName}
 						defaultValue={this.props.playerName}
 						onEndEditing={this.onEndEditing} />
-					{this.viewGames(this.props.games)}
+					<GamesView games={this.props.games}/>
 				</Content>
 				<Fab
 					style={styles.buttonNewGame}

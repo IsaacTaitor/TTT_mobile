@@ -6,12 +6,13 @@ import { Container, Content, Text, View, Button } from "native-base";
 import Headers from "../../components/shared/Headers";
 import GameField from "../../components/elements/GameField";
 import ScoreBoard from "../../components/elements/ScoreBoard";
+import StatusGame from "../../components/elements/StatusGame";
+import TimeGame from "../../components/elements/TimeGame";
 import { NavigationParams, NavigationScreenProp, NavigationState } from "react-navigation";
 
 import { Games, ApplicationStore, StateStatus, StateTurn, Coordinates } from "../../types/store";
 import { styles } from "./styles";
 import { turnAI } from "../../utils/turnAI";
-import moment from "../../utils/moment";
 
 import { editField, surrender, changeTime } from "../../redux/games/gamesActions";
 
@@ -68,48 +69,15 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 		this.props.changeTime(id, this.props.games[id].time + 1000);
 	}
 
-	private viewStatusGame = (status: StateStatus): React.ReactElement => {
-		let text = null;
-		if (status !== StateStatus.PLAYING) {
-			switch (status) {
-			case StateStatus.WIN:
-				text = <Text style={styles.statusTextWin}>YOU WIN!</Text>;
-				break;
-			case StateStatus.LOSE:
-				text = <Text style={styles.statusTextLose}>YOU LOSE</Text>;
-				break;
-			case StateStatus.DRAW:
-				text = <Text style={styles.statusTextDraw}>DRAW</Text>;
-				break;
+	private viewButton = (status: StateStatus, id: string): React.ReactElement => (
+		<View style={styles.viewButton}>
+			{
+				status === StateStatus.PLAYING
+					? <Button style={styles.button} onPress={() => this.props.surrender(id)}><Text>SURRENDER</Text></Button >
+					: <Button style={styles.button} onPress={() => this.props.navigation.goBack()}><Text>BACK</Text></Button >
 			}
-		}
-		return (
-			<View style={styles.statusGameView}>
-				{text}
-			</View>);
-	}
-
-	private viewButton = (status: StateStatus, id: string): React.ReactElement => {
-		return (
-			<View style={styles.viewButton}>
-				{
-					status === StateStatus.PLAYING
-						? <Button style={styles.button} onPress={() => this.props.surrender(id)}><Text>SURRENDER</Text></Button >
-						: <Button style={styles.button} onPress={() => this.props.navigation.goBack()}><Text>BACK</Text></Button >
-				}
-			</View>
-		);
-	}
-
-	private viewTimeGame = (time: Date): React.ReactElement => {
-		return (
-			<View style={styles.viewTimeGame}>
-				<Text style={styles.time}>
-					{moment(time).format("HH:mm:ss")}
-				</Text>
-			</View>
-		);
-	}
+		</View>
+	);
 
 	render(): React.ReactElement {
 		const { id, playerName } = this.props.navigation.state.params;
@@ -121,8 +89,8 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 				<Content style={styles.content}>
 					<ScoreBoard playerName={playerName} game={games[id]} />
 					<GameField game={games[id]} editField={editField} />
-					{this.viewTimeGame(new Date(games[id].time))}
-					{this.viewStatusGame(games[id].status)}
+					<TimeGame time={new Date(games[id].time)} />
+					<StatusGame status={games[id].status} />
 					{this.viewButton(games[id].status, id)}
 				</Content>
 			</Container>

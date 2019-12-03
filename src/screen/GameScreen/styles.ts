@@ -15,33 +15,8 @@ export const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center"
 	},
-	statusGameView: {
-		justifyContent: "center",
-		alignItems: "center",
-		height: 70
-	},
-	statusTextWin: {
-		fontSize: 18,
-		color: "green" 
-	},
-	statusTextLose: {
-		fontSize: 18,
-		color: "red"
-	},
-	statusTextDraw: {
-		fontSize: 18,
-		color: "black"
-	},
 	viewButton: {
 		justifyContent: "center",
 		alignItems: "center"
 	},
-	viewTimeGame: {
-		justifyContent: "center",
-		alignItems: "center",
-		height: 70
-	},
-	time: {
-		fontSize: 20
-	}
 });

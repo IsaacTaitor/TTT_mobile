@@ -18,10 +18,5 @@ export const styles = StyleSheet.create({
 	},
 	buttonNewGame: {
 		backgroundColor: "#009789"
-	},
-	games: {
-		flex: 1,
-		flexDirection: "row",
-		flexWrap: "wrap"
 	}
 });
