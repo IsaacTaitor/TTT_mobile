@@ -19,19 +19,19 @@ const GamesSquare: React.FC<GamesSquareProps> = (props: GamesSquareProps) => (
 		onPress={props.onPress}
 		style={[
 			styles.gamesSquare,
-			props.isLast ? null : styles.indent,
+			!props.isLast && styles.indent,
 			props.status === StateStatus.PLAYING ? styles.playing : styles.end]}>
 		<View style={styles.body}>
 			{props.status === StateStatus.PLAYING
 				? <Text style={styles.title}>{props.opponent}</Text>
 				: <View style={styles.titleView}>
 					<View style={styles.player}>
-						<Text numberOfLines={2} style={[styles.titleEndGame, props.status === StateStatus.WIN ? styles.titleWin : null]}>{props.playerName}</Text>
-						{props.status === StateStatus.WIN ? <Icon name={"checkmark"} style={styles.checkmark} /> : null}
+						<Text numberOfLines={2} style={[styles.titleEndGame, props.status === StateStatus.WIN && styles.titleWin]}>{props.playerName}</Text>
+						{props.status === StateStatus.WIN && <Icon name={"checkmark"} style={styles.checkmark} />}
 					</View>
 					<View style={{ flexDirection: "row" }}>
-						<Text numberOfLines={2} style={[styles.titleEndGame, props.status === StateStatus.LOSE ? styles.titleWin : null]} >{props.opponent}</Text>
-						{props.status === StateStatus.LOSE ? <Icon name={"checkmark"} style={styles.checkmark} /> : null}
+						<Text numberOfLines={2} style={[styles.titleEndGame, props.status === StateStatus.LOSE && styles.titleWin]} >{props.opponent}</Text>
+						{props.status === StateStatus.LOSE && <Icon name={"checkmark"} style={styles.checkmark} />}
 					</View>
 				</View>
 			}

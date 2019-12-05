@@ -42,7 +42,7 @@ const GameField: React.FC<GameFieldProps> = (props: GameFieldProps) => {
 								<TouchableWithoutFeedback
 									key={i + "" + k}
 									onPress={(): void => onPress(state, { x: i, y: k })}>
-									<View style={[styles.cell, k === 2 ? null : styles.borderRightWidth, styleLastRow(i)]}>
+									<View style={[styles.cell, k !== 2 && styles.borderRightWidth, styleLastRow(i)]}>
 										<View style={styles.viewIcon}>
 											{viewIcon(row[k])}
 										</View>

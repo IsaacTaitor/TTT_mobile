@@ -55,6 +55,7 @@ class HomeScreen extends Component<HomeScreenProps> {
 	}
 
 	render(): React.ReactElement {
+		const { games, playerName } = this.props;
 		return (
 			<Container style={styles.container}>
 				<Headers />
@@ -62,9 +63,9 @@ class HomeScreen extends Component<HomeScreenProps> {
 				<Content style={styles.content}>
 					<Input
 						style={styles.inputName}
-						defaultValue={this.props.playerName}
+						defaultValue={playerName}
 						onEndEditing={this.onEndEditing} />
-					<GamesView games={this.props.games}/>
+					<GamesView games={games} playerName={playerName} onPress={(id) => this.navigateToGame(id)}/>
 				</Content>
 				<Fab
 					style={styles.buttonNewGame}

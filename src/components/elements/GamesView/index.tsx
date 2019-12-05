@@ -6,19 +6,21 @@ import { styles } from "./styles";
 
 interface GamesProps {
 	games: Games;
+	playerName: string;
+	onPress(id: string): void;
 }
 
 const lengthGamesOnHomeScreen = 4; 
 
-const GamesView: React.FC<GamesProps> = ({ games }: GamesProps): React.ReactElement => (
+const GamesView: React.FC<GamesProps> = ({ games, playerName, onPress }: GamesProps): React.ReactElement => (
 	<View style={styles.games}>
-		{Object.keys(this.props.games).map((id, key) =>
+		{Object.keys(games).map((id: string, key) =>
 			<GameSquare
-				onPress={(): void => this.navigateToGame(id)}
+				onPress={() => onPress(id)}
 				key={id}
 				time={games[id].time}
 				opponent={games[id].opponent}
-				playerName={this.props.playerName}
+				playerName={playerName}
 				status={games[id].status}
 				isLast={!((key + 1) % lengthGamesOnHomeScreen)} />
 		)}
