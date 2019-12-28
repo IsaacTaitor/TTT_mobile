@@ -10,8 +10,8 @@
     "eslint:dump": "eslint --print-config ./.eslintrc.json"
   },
   "dependencies": {
-    "expo": "35.0.1",
-    "global": "^4.4.0",
+    "expo": "36.0.2",
+    "global": "4.4.0",
     "moment": "2.24.0",
     "moment-timezone": "0.5.27",
     "native-base": "2.13.8",
