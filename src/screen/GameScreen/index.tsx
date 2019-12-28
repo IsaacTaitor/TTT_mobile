@@ -25,7 +25,6 @@ interface GameScreenProps {
 }
 
 interface GameScreenState {
-	turnAI: boolean;
 	intervalId: number;
 }
 
@@ -33,32 +32,30 @@ class GameScreen extends Component<GameScreenProps, GameScreenState> {
 	constructor(props) {
 		super(props);
 		this.state = {
-			turnAI: true,
 			intervalId: 0
 		};
 	}
 
-	componentDidUpdate(): void {
+	componentDidUpdate(prevProps): void {
 		const { id } = this.props.navigation.state.params;
 		const { games, editField } = this.props;
-		if (games[id].turn === StateTurn.AI) {
-			if (this.state.turnAI) {
-				setTimeout(() => turnAI(id, games[id].field, editField), 0);
-				this.setState({ turnAI: false });
+		if (prevProps.games[id].turn !== games[id].turn) {
+			if (games[id].turn === StateTurn.AI) {
+				setTimeout(() => turnAI(id, games[id].field, editField), 0.5);
+			} else if (games[id].turn === StateTurn.GAMEOVER) {
+				clearInterval(this.state.intervalId);
 			}
-		} else if (games[id].turn === StateTurn.PLAYER) {
-			if (!this.state.turnAI) {
-				this.setState({ turnAI: true });
-			}
-		} else {
-			clearInterval(this.state.intervalId);
 		}
 	}
 
 	componentDidMount(): void {
+		const { games, editField } = this.props;
 		const { id } = this.props.navigation.state.params;
 		const intervalId = setInterval(() => this.timer(id), 1000);
-		this.setState({ intervalId });
+		this.setState({ intervalId } as unknown);
+		if (games[id].turn === StateTurn.AI) {
+			setTimeout(() => turnAI(id, games[id].field, editField), 0.5);
+		} 
 	}
 
 	componentWillUnmount(): void {
