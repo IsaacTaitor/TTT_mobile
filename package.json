@@ -13,7 +13,7 @@
     "expo": "^36.0.0",
     "expo-cli": "^3.11.3",
     "global": "^4.4.0",
-    "moment": "2.24.0",
+    "moment": "2.29.2",
     "moment-timezone": "0.5.27",
     "native-base": "2.13.8",
     "react": "16.9.0",
